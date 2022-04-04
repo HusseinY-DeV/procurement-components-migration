@@ -36,7 +36,7 @@ export default React.memo(function EditorComp({ removeImage, onChange, name, cla
         className={className ? className : undefined}
         style={style ? style : undefined}
         modules={{ toolbar: readOnly ? [] : toolbarOptions }}
-        onChange={handleChange}
+        onChange={(value) => handleChange(value)}
         onBlur={onBlur ? onBlur : undefined}
         readOnly={readOnly ? true : false}
     />

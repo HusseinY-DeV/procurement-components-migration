@@ -32,10 +32,10 @@
     "react-router-dynamic-breadcrumbs": "^2.2.0",
     "react-scripts": "5.0.0",
     "react-select": "^5.2.2",
-    "react-strap": "^0.0.1",
     "react-table": "^7.7.0",
     "react-table-hoc-fixed-columns": "^2.3.4",
     "react-virtualized-select": "^3.1.3",
+    "reactstrap": "^9.0.1",
     "redux": "^4.1.2",
     "scroll-into-view": "^1.16.0",
     "web-vitals": "^2.1.0"

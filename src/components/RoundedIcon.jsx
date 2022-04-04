@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from "reactstrap";
 import React from 'react'
 

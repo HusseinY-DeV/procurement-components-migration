@@ -34,6 +34,7 @@ export default React.memo(function InputPassComp({ value, handleChange, name, ha
     }, [])
 
     useEffect(() => {
+        if (value === state.stateValue) return
         setState(prevState => (
             { ...prevState, stateValue: value }
         ))

@@ -1,40 +1,42 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
 
-export default React.memo(function TextAreaComp({ value, name, onChange, placeholder, style, maxLength, maxRows }) {
+export function TextAreaComp({ value, name, maxRows, onChange, placeholder, maxLength, disabled, className, style }) {
 
-    const [valueState, setValueState] = useState('')
+    const [state, setState] = useState(value);
 
-    const handleChangeInput = useCallback((e) => {
-        const { value } = e.target
-        setValueState(value)
-        onChange(value, name)
-    }, [])
+    const handleChange = useCallback(e => {
+        const { value } = e.target;
+        setState(value.trim());
+        onChange(value.trim(), name)
+    }, [onChange])
 
-    const onBlur = useCallback((e) => {
-        setValueState(e.target.value.trim())
-        onChange(e.target.value.trim(), name)
-    }, [])
+    const onBlur = useCallback(e => {
+        const { value } = e.target;
+        setState(value.trim());
+        onChange(value.trim(), name)
+    }, [onChange])
 
     useEffect(() => {
-        setValueState(value)
-    }, [value])
+        if (value === state) return;
+        setState(value);
+    }, [value]);
 
-    return (
-        <div>
-            <TextareaAutosize
-                onChange={handleChangeInput}
-                name={name}
-                value={valueState}
-                placeholder={placeholder ? placeholder : ""}
-                className={`form-control ${className}`}
-                style={{ ...style }}
-                maxLength={maxLength ? maxLength : 5000}
-                onBlur={onBlur}
-                disabled={disabled ? true : false}
-                aria-label="maximum height"
-                maxRows={maxRows}
-            />
-        </div>
-    )
-})
+    return <div>
+        <TextareaAutosize
+            onChange={handleChange}
+            name={name}
+            value={state}
+            placeholder={placeholder ? placeholder : ""}
+            className={`form-control ${className}`}
+            style={{ ...style }}
+            maxLength={maxLength ? maxLength : 5000}
+            onBlur={onBlur}
+            disabled={disabled}
+            aria-label="maximum height"
+            maxRows={maxRows}
+        />
+    </div>
+}
+
+

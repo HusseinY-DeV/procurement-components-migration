@@ -18,6 +18,7 @@ export default React.memo(function InputTextComp({ value, removeSpaces, name, ha
     }, [])
 
     useEffect(() => {
+        if (value === valueState) return
         setValueState(value)
     }, [value])
 

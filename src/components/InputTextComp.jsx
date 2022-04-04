@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 export default React.memo(function InputTextComp({ value, removeSpaces, name, handleChange, handleOnblur, id, type, style, className, placeholder, readOnly, disabled, maxLength }) {
 

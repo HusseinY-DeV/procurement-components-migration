@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Tooltip } from "reactstrap";
-import React from 'react'
 
 const validPositions = ["right", "left"];
 

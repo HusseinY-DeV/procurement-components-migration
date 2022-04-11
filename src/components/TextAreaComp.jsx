@@ -1,42 +1,44 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import TextareaAutosize from 'react-autosize-textarea';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Tooltip } from "reactstrap";
 
-export function TextAreaComp({ value, name, maxRows, onChange, placeholder, maxLength, disabled, className, style }) {
+const validPositions = ["right", "left"];
 
-    const [state, setState] = useState(value);
+export function RoundedIcon({ id, tooltip, backgroundColor, position, display, onClick, iconColor, iconClass }) {
 
-    const handleChange = useCallback(e => {
-        const { value } = e.target;
-        setState(value.trim());
-        onChange(value.trim(), name)
-    }, [onChange])
+    const divStyles = useMemo(() => {
+        return {
+            backgroundColor,
+            float: validPositions.includes(position) ? position : "none",
+            margin: position === 'center' ? "0 auto" : "0 0 0 10px",
+            display: display ?? ""
+        }
+    }, [backgroundColor, position, display]);
 
-    const onBlur = useCallback(e => {
-        const { value } = e.target;
-        setState(value.trim());
-        onChange(value.trim(), name)
-    }, [onChange])
+    const [state, setState] = useState({
+        id: id ? id.replace(/ /g, "").replace(/'/g, "", "") : "",
+        tooltip: tooltip ? this.props.tooltip : "",
+        tooltipVisible: false
+    })
 
-    useEffect(() => {
-        if (value === state) return;
-        setState(value);
-    }, [value]);
+    const toggleTooltip = useCallback(() => {
+        setState(prevState => {
+            return {
+                ...prevState,
+                tooltipVisible: !prevState.tooltipVisible
+            }
+        });
+    }, [])
 
-    return <div>
-        <TextareaAutosize
-            onChange={handleChange}
-            name={name}
-            value={state}
-            placeholder={placeholder ? placeholder : ""}
-            className={`form-control ${className}`}
-            style={{ ...style }}
-            maxLength={maxLength ? maxLength : 5000}
-            onBlur={onBlur}
-            disabled={disabled}
-            aria-label="maximum height"
-            maxRows={maxRows}
-        />
+    return <div id={state.id}
+        style={divStyles}
+        className="roundWrapper pointer"
+        onClick={onClick}
+    >
+        <i style={{ color: `${iconColor}` }} className={`fa ${iconClass}`} />
+
+        {(state.id && state.tooltip) &&
+            <Tooltip placement="bottom" isOpen={state.tooltipVisible} target={state.id} toggle={toggleTooltip}>{state.tooltip}</Tooltip>
+        }
+
     </div>
 }
-
-

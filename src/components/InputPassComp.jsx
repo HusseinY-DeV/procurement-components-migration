@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Tooltip } from "reactstrap";
 
-export default React.memo(function InputPassComp({ value, handleChange, name, handleOnblur, className, maxLength, disabled, readOnly, placeholder, hideToggle }) {
+export default React.memo(function InputPassComp({ right, value, handleChange, name, handleOnblur, className, maxLength, disabled, readOnly, placeholder, hideToggle }) {
 
-    const [state, setState] = useState({ stateValue: '', showPassword: false, showToolTip: false })
+    const [state, setState] = useState({ stateValue: value, showPassword: false, showToolTip: false })
 
     const handleChangeInput = useCallback((e) => {
         const { value } = e.target
@@ -42,7 +42,7 @@ export default React.memo(function InputPassComp({ value, handleChange, name, ha
 
 
     return (
-        <div>
+        <>
             <input
                 type={state.showPassword ? "text" : "password"}
                 name={name}
@@ -54,14 +54,14 @@ export default React.memo(function InputPassComp({ value, handleChange, name, ha
                 readOnly={readOnly ? true : false}
                 disabled={disabled ? true : false}
                 maxLength={maxLength ? maxLength : null}
-                onBlur={this.onBlur}
+                onBlur={onBlur}
             />
             {!hideToggle &&
-                <span className="showPass pointer" id={`${name}-showhidePass`} onClick={togglePasswordVisibility} style={{ position: "absolute", top: "0px", right: "0px", padding: "0.45rem 0.3rem" }}>
+                <span className="showPass pointer" id={`${name}-showhidePass`} onClick={togglePasswordVisibility} style={{ position: "absolute", top: "0px", right, padding: "0.45rem 0.3rem", zIndex: 1000, cursor: 'pointer' }}>
                     <i className={`fa fa-eye${state.showPassword ? "-slash" : ""}`}></i>
-                    <Tooltip placement="bottom" isOpen={state.showTooltip} target={`${name}-showhidePass`} toggle={toggleTooltip}>{state.showPassword ? "Hide Password" : "Show Password"}</Tooltip>
+                    <Tooltip placement="bottom" isOpen={state.showToolTip} target={`${name}-showhidePass`} toggle={toggleTooltip}>{state.showPassword ? "Hide Password" : "Show Password"}</Tooltip>
                 </span>
             }
-        </div>
+        </>
     )
 })

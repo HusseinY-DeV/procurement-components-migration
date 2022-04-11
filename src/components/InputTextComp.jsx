@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 export default React.memo(function InputTextComp({ value, removeSpaces, name, handleChange, handleOnblur, id, type, style, className, placeholder, readOnly, disabled, maxLength }) {
 
-    const [valueState, setValueState] = useState()
-    const inputRef = useRef(null)
+    const [valueState, setValueState] = useState(value)
 
     const handleChangeInput = useCallback((e) => {
         const { value } = e.target
@@ -23,23 +22,20 @@ export default React.memo(function InputTextComp({ value, removeSpaces, name, ha
     }, [value])
 
     return (
-        <div key={name}>
-            <input
-                key={`${name}_input`}
-                ref={inputRef}
-                id={id ? id : undefined}
-                type={type ? type : "text"}
-                name={name}
-                style={style}
-                className={`form-control ${className}`}
-                value={valueState}
-                onChange={handleChangeInput}
-                placeholder={placeholder}
-                readOnly={readOnly ? true : false}
-                disabled={disabled ? true : false}
-                onBlur={onBlur}
-                maxLength={maxLength ? maxLength : null}
-            />
-        </div>
+        <input
+            key={`${name}_input`}
+            id={id ? id : undefined}
+            type={type ? type : "text"}
+            name={name}
+            style={style}
+            className={`form-control ${className}`}
+            value={valueState}
+            onChange={handleChangeInput}
+            placeholder={placeholder}
+            readOnly={readOnly ? true : false}
+            disabled={disabled ? true : false}
+            onBlur={onBlur}
+            maxLength={maxLength ? maxLength : null}
+        />
     )
 })
